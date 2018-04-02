@@ -28,22 +28,19 @@
             android:text="등록된 근접 경보" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/Info01"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="TextView" />
+            android:layout_height="60dp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/Info02"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="TextView" />
+            android:layout_height="60dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/Info03"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="TextView" />
+            android:layout_height="60dp" />
 
         <Space
             android:layout_width="match_parent"
