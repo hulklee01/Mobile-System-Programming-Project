@@ -27,11 +27,9 @@ public class AddActivity extends Activity implements LocationListener {
     TextView latitudeText, addLatitudeText;
     TextView longitudeText, addLongitudeText;
     LocationInfo info;
-    PendingIntent proximityIntent;
     double latitude, longitude;
     boolean isPermitted = false;
     boolean isLocRequested = false;
-    boolean isAlertRegistered = false;
     final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     @Override
@@ -60,35 +58,25 @@ public class AddActivity extends Activity implements LocationListener {
         }
     }
 
+    //*******************************************************************
+    // Runtime permission check
+    //*******************************************************************
+
     private void requestRuntimePermission() {
-        //*******************************************************************
-        // Runtime permission check
-        //*******************************************************************
+
         if (ContextCompat.checkSelfPermission(AddActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(AddActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
             } else {
-
-                // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(AddActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             }
         } else {
-            // ACCESS_FINE_LOCATION 권한이 있는 것
             isPermitted = true;
         }
-        //*********************************************************************
     }
 
     @Override
@@ -96,31 +84,14 @@ public class AddActivity extends Activity implements LocationListener {
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // read_external_storage-related task you need to do.
-
-                    // ACCESS_FINE_LOCATION 권한을 얻음
                     isPermitted = true;
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
-                    // 권한을 얻지 못 하였으므로 location 요청 작업을 수행할 수 없다
-                    // 적절히 대처한다
                     isPermitted = false;
-
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -135,7 +106,6 @@ public class AddActivity extends Activity implements LocationListener {
     }
 
     public void onClickAddLocation(View view) {
-
         EditText editTextName = (EditText)findViewById(R.id.editTextName);
         EditText editTextRadius = (EditText)findViewById(R.id.editTextRadius);
 
@@ -155,12 +125,10 @@ public class AddActivity extends Activity implements LocationListener {
             info.setLatitude3(latitude);
             info.setLongitude3(longitude);
         } else
-            System.out.println("---------꽉 찼습니다--------");
+            Toast.makeText(this, "저장소가 꽉 찼습니다!!", Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
     }
 
     @Override

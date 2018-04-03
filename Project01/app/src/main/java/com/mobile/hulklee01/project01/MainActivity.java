@@ -45,13 +45,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         if(info.getName1() != null) {
             info01.setText("1. " + info.getName1());
-            // 근접 경보를 받을 브로드캐스트 리시버 객체 생성 및 등록
-            // 액션이 kr.ac.koreatech.msp.locationAlert인 브로드캐스트 메시지를 받도록 설정
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     boolean isEntering = intent.getBooleanExtra(LocationManager.KEY_PROXIMITY_ENTERING, false);
-                    // boolean getBooleanExtra(String name, boolean defaultValue)
 
                     if(isEntering)
                         Toast.makeText(context,  info.getName1() + "에 접근중입니다..", Toast.LENGTH_LONG).show();
@@ -62,13 +59,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             IntentFilter filter = new IntentFilter("kr.ac.koreatech.msp.locationAlert");
             registerReceiver(receiver, filter);
 
-            // ProximityAlert 등록을 위한 PendingIntent 객체 얻기
             Intent intent = new Intent("kr.ac.koreatech.msp.locationAlert");
             proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
             try {
-                // 근접 경보 등록 메소드
-                // void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
-                // 아래 위도, 경도 값의 위치는 2공학관 420호 창가 부근
                 locManager.addProximityAlert(info.getLatitude1(), info.getLongitude1(), info.getRadius1(), -1, proximityIntent);
             } catch (SecurityException e) {
                 e.printStackTrace();
@@ -78,13 +71,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         if(info.getName2() != null) {
             info02.setText("2. " + info.getName2());
-            // 근접 경보를 받을 브로드캐스트 리시버 객체 생성 및 등록
-            // 액션이 kr.ac.koreatech.msp.locationAlert인 브로드캐스트 메시지를 받도록 설정
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     boolean isEntering = intent.getBooleanExtra(LocationManager.KEY_PROXIMITY_ENTERING, false);
-                    // boolean getBooleanExtra(String name, boolean defaultValue)
 
                     if(isEntering)
                         Toast.makeText(context,  info.getName2() + "에 접근중입니다..", Toast.LENGTH_LONG).show();
@@ -95,13 +85,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             IntentFilter filter = new IntentFilter("kr.ac.koreatech.msp.locationAlert");
             registerReceiver(receiver, filter);
 
-            // ProximityAlert 등록을 위한 PendingIntent 객체 얻기
             Intent intent = new Intent("kr.ac.koreatech.msp.locationAlert");
             proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
             try {
-                // 근접 경보 등록 메소드
-                // void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
-                // 아래 위도, 경도 값의 위치는 2공학관 420호 창가 부근
                 locManager.addProximityAlert(info.getLatitude2(), info.getLongitude2(), info.getRadius2(), -1, proximityIntent);
             } catch (SecurityException e) {
                 e.printStackTrace();
@@ -111,13 +97,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         if(info.getName3() != null) {
             info03.setText("3. " + info.getName3());
-            // 근접 경보를 받을 브로드캐스트 리시버 객체 생성 및 등록
-            // 액션이 kr.ac.koreatech.msp.locationAlert인 브로드캐스트 메시지를 받도록 설정
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     boolean isEntering = intent.getBooleanExtra(LocationManager.KEY_PROXIMITY_ENTERING, false);
-                    // boolean getBooleanExtra(String name, boolean defaultValue)
+
                     if(isEntering)
                         Toast.makeText(context,  info.getName3() + "에 접근중입니다..", Toast.LENGTH_LONG).show();
                     else
@@ -127,54 +111,36 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             IntentFilter filter = new IntentFilter("kr.ac.koreatech.msp.locationAlert");
             registerReceiver(receiver, filter);
 
-            // ProximityAlert 등록을 위한 PendingIntent 객체 얻기
             Intent intent = new Intent("kr.ac.koreatech.msp.locationAlert");
             proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
             try {
-                // 근접 경보 등록 메소드
-                // void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
-                // 아래 위도, 경도 값의 위치는 2공학관 420호 창가 부근
                 locManager.addProximityAlert(info.getLatitude3(), info.getLongitude3(), info.getRadius3(), -1, proximityIntent);
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
             isAlertRegistered = true;
         }
-
-        System.out.println(info.toString());
-
         requestRuntimePermission();
     }
 
+    //*******************************************************************
+    // Runtime permission check
+    //*******************************************************************
+
     private void requestRuntimePermission() {
-        //*******************************************************************
-        // Runtime permission check
-        //*******************************************************************
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
             } else {
-
-                // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(MainActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             }
         } else {
-            // ACCESS_FINE_LOCATION 권한이 있는 것
             isPermitted = true;
         }
-        //*********************************************************************
     }
 
     @Override
@@ -182,31 +148,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // read_external_storage-related task you need to do.
-
-                    // ACCESS_FINE_LOCATION 권한을 얻음
                     isPermitted = true;
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
-                    // 권한을 얻지 못 하였으므로 location 요청 작업을 수행할 수 없다
-                    // 적절히 대처한다
                     isPermitted = false;
-
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -221,10 +170,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-//        locationText.setText("위도 : " + location.getLatitude()
-//                + " 경도 : " + location.getLongitude());
-    }
+    public void onLocationChanged(Location location) {}
 
     @Override
     public void onProviderDisabled(String provider) {}
