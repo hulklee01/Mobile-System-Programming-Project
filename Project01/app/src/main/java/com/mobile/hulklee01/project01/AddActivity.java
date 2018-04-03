@@ -50,8 +50,7 @@ public class AddActivity extends Activity implements LocationListener {
             if(isPermitted) {
                 locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, this);
                 isLocRequested = true;
-            }
-            else
+            } else
                 Toast.makeText(this, "Permission이 없습니다..", Toast.LENGTH_LONG).show();
         } catch (SecurityException e) {
             e.printStackTrace();

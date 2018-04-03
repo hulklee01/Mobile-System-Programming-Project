@@ -43,8 +43,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        /* 위치 객체 info의 이름을 검색해서 null 값 여부를 확인해 행위를 결정한다 */
         if(info.getName1() != null) {
-            info01.setText("1. " + info.getName1());
+            info01.setText("1. " + info.getName1());    // 게시판에 표시
+
+            /* 브로드캐스트를 구현해서 알림을 준다 */
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -56,21 +59,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         Toast.makeText(context, info.getName1() + "에서 벗어납니다..", Toast.LENGTH_LONG).show();
                 }
             };
+
             IntentFilter filter = new IntentFilter("kr.ac.koreatech.msp.locationAlert");
             registerReceiver(receiver, filter);
 
             Intent intent = new Intent("kr.ac.koreatech.msp.locationAlert");
             proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
             try {
                 locManager.addProximityAlert(info.getLatitude1(), info.getLongitude1(), info.getRadius1(), -1, proximityIntent);
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
+            
             isAlertRegistered = true;
         }
 
+        /* 위치 객체 info의 이름을 검색해서 null 값 여부를 확인해 행위를 결정한다 */
         if(info.getName2() != null) {
-            info02.setText("2. " + info.getName2());
+            info02.setText("2. " + info.getName2());    // 게시판에 표시
+
+            /* 브로드캐스트를 구현해서 알림을 준다 */
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -82,21 +91,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         Toast.makeText(context, info.getName2() + "에서 벗어납니다..", Toast.LENGTH_LONG).show();
                 }
             };
+
             IntentFilter filter = new IntentFilter("kr.ac.koreatech.msp.locationAlert");
             registerReceiver(receiver, filter);
 
             Intent intent = new Intent("kr.ac.koreatech.msp.locationAlert");
             proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
             try {
                 locManager.addProximityAlert(info.getLatitude2(), info.getLongitude2(), info.getRadius2(), -1, proximityIntent);
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
+
             isAlertRegistered = true;
         }
 
+        /* 위치 객체 info의 이름을 검색해서 null 값 여부를 확인해 행위를 결정한다 */
         if(info.getName3() != null) {
-            info03.setText("3. " + info.getName3());
+            info03.setText("3. " + info.getName3());    // 게시판에 표시
+
+            /* 브로드캐스트를 구현해서 알림을 준다 */
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -108,16 +123,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         Toast.makeText(context, info.getName3() + "에서 벗어납니다..", Toast.LENGTH_LONG).show();
                 }
             };
+
             IntentFilter filter = new IntentFilter("kr.ac.koreatech.msp.locationAlert");
             registerReceiver(receiver, filter);
 
             Intent intent = new Intent("kr.ac.koreatech.msp.locationAlert");
             proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
             try {
                 locManager.addProximityAlert(info.getLatitude3(), info.getLongitude3(), info.getRadius3(), -1, proximityIntent);
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
+
             isAlertRegistered = true;
         }
         requestRuntimePermission();
